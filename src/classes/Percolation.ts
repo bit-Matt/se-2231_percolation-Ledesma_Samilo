@@ -1,8 +1,17 @@
-class Percolation {
+//🟦⬜⬛
+
+
+export default class Percolation {
   // creates n-by-n grid, with all sites initially blocked
+   rows : number
+   columns : number
+
   constructor(n: number) {
-    return
+    this.rows = n
+    this.columns = n
   }
+
+  
 
   // opens the site (row, col) if it is not open already
   open(row: number, col: number) {
