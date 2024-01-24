@@ -15,7 +15,9 @@ function main() {
   while (true) {
     console.log('\nOptions:');
     console.log('1. View current grid');
-    console.log('2. Exit');
+    console.log('2. Open a random site');
+    console.log('3. Exit');
+
 
     const choice = readlineSync.question('Enter your choice: ');
 
@@ -25,6 +27,12 @@ function main() {
         break;
 
       case 2:
+        let nowOpen = percolation.open();
+        console.log('Opening a random site.');
+        console.log(nowOpen);
+        break;
+      
+      case 3:
         console.log('Exiting program.');
         process.exit(0);
 

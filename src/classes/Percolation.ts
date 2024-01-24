@@ -21,18 +21,36 @@ export default class Percolation {
   }
 
   // opens the site (row, col) if it is not open already
-  open(row: number, col: number) {
-    return;
+  open() {
+    const row: number = Math.floor(Math.random() * this.rows);
+    const col: number = Math.floor(Math.random() * this.columns);
+    this.grid[row][col] = "⬜";
+
+    if (this.grid[row] === this.grid[0] && this.grid[row][col] === "⬜") {
+      this.grid[row][col] = "🟦";
+    }
+
+    return [row, col];
   }
 
   // is the site (row, col) open?
   isOpen(row: number, col: number): boolean {
+    if (this.grid[row][col] === "⬛" ) {
+      return false;
+    }
     return true;
   }
 
   // is the site (row, col) full?
   isFull(row: number, col: number): boolean {
-    return true;
+    // if (this.grid[row] === this.grid[0] && this.grid[row][col] === "⬜") {
+    //   this.grid[row][col] = "🟦";
+    // }
+
+    if (this.grid[row][col] === "🟦") {
+      return true;
+    }
+    return false;
   }
 
   // returns the number of open sites
