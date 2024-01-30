@@ -14,21 +14,21 @@ export class QuickUnionUF {
   }
 
   root(i: number) {
-    while(i !== this.ids[i]) {
+    while (i !== this.ids[i]) {
       this.ids[i] = this.ids[this.ids[i]]; // Path Compression
-      i = this.ids[i]
+      i = this.ids[i];
     }
-    return i
+    return i;
   }
 
   connected(p: number, q: number): boolean {
-    return this.root(p) === this.root(q)
-}
+    return this.root(p) === this.root(q);
+  }
 
   union(p: number, q: number) {
-    let i : number = this.root(p)
-    let j : number = this.root(q)
-  
+    let i: number = this.root(p);
+    let j: number = this.root(q);
+
     if (i === j) return;
 
     if (this.sz[i] < this.sz[j]) { // Weighted Tree
