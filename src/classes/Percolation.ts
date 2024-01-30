@@ -32,7 +32,7 @@ export default class Percolation {
        throw new Error('Row or column index out of bounds');
     }
    
-    if (this.isOpen(row, col)) {
+    if (this.isOpen(row, col)) { // ---- FIX: if site is already open, open a different site ---- // 
        return;
     }
    
