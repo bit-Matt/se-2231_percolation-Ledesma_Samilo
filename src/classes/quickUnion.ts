@@ -31,7 +31,7 @@ export class QuickUnionUF {
 
     if (i === j) return;
 
-    if (this.sz[i] < this.sz[j]) {
+    if (this.sz[i] < this.sz[j]) { // Weighted Tree
       this.ids[i] = j;
       this.sz[j] += this.sz[i];
     } else {
