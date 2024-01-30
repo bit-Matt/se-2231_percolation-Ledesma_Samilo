@@ -28,7 +28,8 @@ export default class Percolation {
 
   // opens the site (row, col) if it is not open already
   open(row: number, col: number) {
-    if (this.isOpen(row, col)) {
+    if (this.isOpen(row, col)) { 
+      this.openRandomSite();
       return;
     }
 
@@ -38,6 +39,10 @@ export default class Percolation {
 
     if (row === 0) {
       this.uf.union(0, index);
+    }
+
+    if (row === this.rows - 1) {
+      this.uf.union(this.rows * this.columns, index);
     }
 
     if (row > 0 && this.isOpen(row - 1, col)) {
@@ -62,7 +67,7 @@ export default class Percolation {
 
   // is the site (row, col) open?
   isOpen(row: number, col: number): boolean {
-    return this.grid[row][col] === "⬜";
+    return this.grid[row][col] === "⬜" || this.grid[row][col] === "🟦";
   }
 
   // is the site (row, col) full?
@@ -77,6 +82,6 @@ export default class Percolation {
 
   // does the system percolate?
   percolates(): boolean {
-    return this.uf.connected(0, this.rows * this.columns - 1);
+    return this.uf.connected(0, this.rows * this.columns);
   }
 }
