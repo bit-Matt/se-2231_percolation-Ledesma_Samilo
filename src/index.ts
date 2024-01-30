@@ -37,8 +37,11 @@ function printGrid(percolation: Percolation) {
        case 3:
          while (!percolation.percolates()) {
             percolation.openRandomSite();
+            // printGrid(percolation);
+            // console.log('Opening a random site.')
             numOpenSites++;
          }
+         printGrid(percolation);
          console.log(`System percolated after ${numOpenSites} attempts.`);
          break;
  

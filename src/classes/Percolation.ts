@@ -28,35 +28,35 @@ export default class Percolation {
 
   // opens the site (row, col) if it is not open already
   open(row: number, col: number) {
-    if (row < 0 || row >= this.rows || col < 0 || col >= this.columns) {
-       throw new Error('Row or column index out of bounds');
+    if (this.isOpen(row, col)) { 
+      this.openRandomSite();
     }
-   
-    if (this.isOpen(row, col)) { // ---- FIX: if site is already open, open a different site ---- // 
-       return;
-    }
-   
+
     const index = row * this.columns + col;
     this.grid[row][col] = "⬜";
     this.openSites++;
-   
+
     if (row === 0) {
-       this.uf.union(0, index);
+      this.uf.union(0, index);
     }
-   
+
+    if (row === this.rows - 1) {
+      this.uf.union(this.rows * this.columns, index);
+    }
+
     if (row > 0 && this.isOpen(row - 1, col)) {
-       this.uf.union(index, (row - 1) * this.columns + col);
+      this.uf.union(index, (row - 1) * this.columns + col);
     }
     if (row < this.rows - 1 && this.isOpen(row + 1, col)) {
-       this.uf.union(index, (row + 1) * this.columns + col);
+      this.uf.union(index, (row + 1) * this.columns + col);
     }
     if (col > 0 && this.isOpen(row, col - 1)) {
-       this.uf.union(index, row * this.columns + col - 1);
+      this.uf.union(index, row * this.columns + col - 1);
     }
     if (col < this.columns - 1 && this.isOpen(row, col + 1)) {
-       this.uf.union(index, row * this.columns + col + 1);
+      this.uf.union(index, row * this.columns + col + 1);
     }
-   }
+  }
 
   openRandomSite() {
     const row: number = Math.floor(Math.random() * this.rows);
@@ -66,26 +66,13 @@ export default class Percolation {
 
   // is the site (row, col) open?
   isOpen(row: number, col: number): boolean {
-    if (row < 0 || row >= this.rows || col < 0 || col >= this.columns) {
-      throw new Error("Row or column index out of bounds");
-    }
-
-    return this.grid[row][col] === "⬜";
+    return this.grid[row][col] === "⬜" || this.grid[row][col] === "🟦";
   }
 
   // is the site (row, col) full?
   isFull(row: number, col: number): boolean {
-    if (row < 0 || row >= this.rows || col < 0 || col >= this.columns) {
-       throw new Error('Row or column index out of bounds');
-    }
-   
-    const isFull = this.uf.connected(0, row * this.columns + col);
-    if (isFull) {
-       this.grid[row][col] = "🟦";
-    }
-   
-    return isFull;
-   }
+    return this.uf.connected(0, row * this.columns + col);
+  }
 
   // returns the number of open sites
   numberOfOpenSites(): number {
@@ -94,6 +81,6 @@ export default class Percolation {
 
   // does the system percolate?
   percolates(): boolean {
-    return this.uf.connected(0, this.rows * this.columns - 1);
+    return this.uf.connected(0, this.rows * this.columns);
   }
 }
