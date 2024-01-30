@@ -30,6 +30,7 @@ export default class Percolation {
   open(row: number, col: number) {
     if (this.isOpen(row, col)) { 
       this.openRandomSite();
+      return;
     }
 
     const index = row * this.columns + col;
