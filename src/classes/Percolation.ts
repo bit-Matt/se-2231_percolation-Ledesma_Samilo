@@ -10,6 +10,10 @@ export default class Percolation {
 
   // creates n-by-n grid, with all sites initially blocked
   constructor(n: number) {
+    if (n <= 0) {
+      throw new Error("n must be greater than 0");
+    }
+
     this.rows = n;
     this.columns = n;
     this.grid = this.initializeGrid(n);
@@ -36,6 +40,11 @@ export default class Percolation {
     const index = row * this.columns + col;
     this.grid[row][col] = "⬜";
     this.openSites++;
+
+    if (this.isFull(row, col)) {
+      this.grid[row][col] = "🟦";
+   }
+  
 
     if (row === 0) {
       this.uf.union(0, index);
